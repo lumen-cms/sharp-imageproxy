@@ -1,13 +1,13 @@
-import {IncomingMessage, ServerResponse} from "http";
+import {IncomingMessage, ServerResponse} from 'http'
 
 const {send} = require('micro')
 const etag = require('etag')
 const sharp = require('sharp')
-const request = require('request').defaults({encoding: null});
+const request = require('request').defaults({encoding: null})
 const {getConfig, parseParams} = require('./parser')
 
 module.exports = async function (req: IncomingMessage, response: ServerResponse) {
-    if (!req.url) {
+    if (!req.url || req.url.match(/favicon.ico|logo.png|robots.txt|.css.map/g)) {
         return send(response, 400, 'File is not an image')
     }
     const [paramsErr, params] = parseParams(req.url)
@@ -31,7 +31,7 @@ module.exports = async function (req: IncomingMessage, response: ServerResponse)
     if (contentLength! > 25 * 1024 * 1024) {
         return send(response,
             400,
-            'File too big',
+            'File too big'
         )
     }
 
@@ -45,9 +45,10 @@ module.exports = async function (req: IncomingMessage, response: ServerResponse)
     const date = headers['date']
     try {
         const stream = sharp(body)
+
         const output = await stream
             .metadata()
-            .then(meta => {
+            .then(() => {
                 const config = getConfig({resize, crop})
 
                 stream.limitInputPixels(false)
@@ -57,7 +58,7 @@ module.exports = async function (req: IncomingMessage, response: ServerResponse)
                         left: config.crop.x,
                         top: config.crop.y,
                         width: config.crop.width,
-                        height: config.crop.height,
+                        height: config.crop.height
                     })
                 }
 
@@ -142,7 +143,7 @@ module.exports = async function (req: IncomingMessage, response: ServerResponse)
  */
 function requestFile(url: string) {
     return new Promise((resolve, reject) => {
-        return request(url, {}, (err, res, body) => {
+        return request(url, {}, (err: any, res: any, body: any) => {
             if (err) {
                 reject(err)
             } else {

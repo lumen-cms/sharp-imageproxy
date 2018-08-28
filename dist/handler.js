@@ -15,8 +15,7 @@ const request = require('request').defaults({ encoding: null });
 const { getConfig, parseParams } = require('./parser');
 module.exports = function (req, response) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(req.url);
-        if (!req.url) {
+        if (!req.url || req.url.match(/favicon.ico|logo.png|robots.txt|.css.map/g)) {
             return send(response, 400, 'File is not an image');
         }
         const [paramsErr, params] = parseParams(req.url);
@@ -45,7 +44,7 @@ module.exports = function (req, response) {
             const stream = sharp(body);
             const output = yield stream
                 .metadata()
-                .then(meta => {
+                .then(() => {
                 const config = getConfig({ resize, crop });
                 stream.limitInputPixels(false);
                 if (config.crop) {
@@ -53,7 +52,7 @@ module.exports = function (req, response) {
                         left: config.crop.x,
                         top: config.crop.y,
                         width: config.crop.width,
-                        height: config.crop.height,
+                        height: config.crop.height
                     });
                 }
                 if (config.resize) {
@@ -118,22 +117,14 @@ module.exports = function (req, response) {
                 }
                 return stream.toBuffer();
             });
-            const base64Img = output.toString('base64');
-            //         'Date': date,
-            //         'ETag': etag
             response.setHeader('Content-Type', contentType);
             response.setHeader('Content-Disposition', contentDisposition);
             response.setHeader('Cache-Control', 'max-age=31536000');
             response.setHeader('Date', date);
-            response.setHeader('ETag', etag(base64Img));
-            // const r = base64Response({
-            //     body: base64Img,
-            //     date,
-            //     contentType,
-            //     contentDisposition,
-            //     etag: etag(base64Img),
-            //     headerETag
-            // });
+            response.setHeader('ETag', etag(output));
+            if (headerETag && headerETag === etag(output)) {
+                return send(response, 304);
+            }
             return send(response, 200, output);
         }
         catch (e) {
@@ -141,22 +132,6 @@ module.exports = function (req, response) {
         }
     });
 };
-/**
- *
- * @param {string} path
- */
-// function parsePath(path: string) {
-//     path = path.replace('/image', '')
-//     const sections = path.split('/').filter(e => e)
-//     if (sections.length > 1) {
-//         return {
-//             url: `https://files.graph.cool/${sections[0]}/${sections[1]}`
-//         }
-//     } else {
-//         // fallback for testing purpose
-//         return {url: 'https://files.graph.cool/cj7r5j1a30jsl0132374v5q2z/cjam6e2mu00rq01373cpgohu9'}
-//     }
-// }
 /**
  *
  * @param {string} url
@@ -177,34 +152,4 @@ function requestFile(url) {
         });
     });
 }
-/**
- *
- * @param {any} body
- * @param {any} date
- * @param {any} contentType
- * @param {any} contentDisposition
- * @param {any} etag
- * @returns {{statusCode: number; headers: {"Content-Type": any; "Content-Disposition": any; "Cache-Control": string; Date: any; ETag: any}; body: any; isBase64Encoded: boolean}}
- */
-// function base64Response({body, date, contentType, contentDisposition, etag, headerETag}) {
-//     const headers = {
-//         'Content-Type': contentType,
-//         'Content-Disposition': contentDisposition,
-//         'Cache-Control': 'max-age=31536000', //31536000
-//         'Date': date,
-//         'ETag': etag
-//     };
-//     if (headerETag && headerETag === etag) {
-//         return {
-//             statusCode: 304,
-//             headers
-//         }
-//     }
-//     return {
-//         statusCode: 200,
-//         headers,
-//         body,
-//         isBase64Encoded: true,
-//     };
-// }
 //# sourceMappingURL=handler.js.map
