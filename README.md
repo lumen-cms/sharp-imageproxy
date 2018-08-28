@@ -64,7 +64,30 @@ npm run prepare
 serverless deploy
 ```
 
-# Deploy
+## Deploy
+
+### With `zeit.co/now`
+You need to place a `now.json` inside of your repo
+```json
+{
+  "public": false,
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
+  },
+  "alias": [
+    "your-now-alias.example.com"
+  ],
+  "files":[
+    "dist",
+    "Dockerfile",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json"
+  ]
+}
 ```
-# npm run build && now
+A simple deploy script is in place
+```bash
+npm run deploy
 ```

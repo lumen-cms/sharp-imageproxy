@@ -23,16 +23,6 @@
     "@types/node": "^10.9.2",
     "ava": "^0.25.0",
     "micro-dev": "^3.0.0",
-    "ts-node": "^7.0.1",
     "typescript": "^3.0.1"
-  },
-  "ava": {
-    "compileEnhancements": false,
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
   }
 }
