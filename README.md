@@ -1,8 +1,8 @@
 # sharp-imageproxy
-`Sharp` serverless imageproxy which is based on Dockerfile. This project can be deployed with `zeit.co/now`
+[`Sharp`](http://sharp.dimens.io/) serverless imageproxy which is based on Dockerfile. This project can be deployed with [`zeit.co/now`](https://zeit.co/now)
 
 ### Inspired
-This project is inspired by serverless-image-proxy which runs in AWS Lambda. Its converted to run on `micro` and can be deployed simple as its based on Dockerfile
+This project is inspired by serverless-image-proxy which runs in AWS Lambda. Its converted to run on `micro` and can be deployed as Dockerfile with [serverless-docker](https://zeit.co/blog/serverless-docker)
 
 ## Notes
 
