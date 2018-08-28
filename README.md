@@ -56,17 +56,16 @@ Supported extensions:
 * bmp
 * webp
 
-### Install
+### Development
 
 ```sh
-npm install --ignore-scripts
-npm run prepare
-serverless deploy
+npm install
+npm run dev
 ```
 
-## Deploy
+### Deploy
 
-### With `zeit.co/now`
+#### With `zeit.co/now`
 You need to place a `now.json` inside of your repo
 ```json
 {
@@ -87,7 +86,7 @@ You need to place a `now.json` inside of your repo
   ]
 }
 ```
-A simple deploy script is in place
+A simple deploy script for `now`
 ```bash
 npm run deploy
 ```
