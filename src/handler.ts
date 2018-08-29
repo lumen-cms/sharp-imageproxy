@@ -19,7 +19,7 @@ module.exports = async function (req: IncomingMessage, response: ServerResponse)
     const {projectId, fileSecret, crop, resize} = params!
     const url = `https://files.graph.cool/${projectId}/${fileSecret}`
     // @ts-ignore
-    const supportWebp = req.headers['Accept'] && req.headers['Accept'].indexOf('webp') !== -1
+    const supportWebp = req.headers.accept && req.headers.accept.includes('webp')
     const headerETag = req.headers['If-None-Match']
     const res: any = await requestFile(url)
     const body: any = res.body
