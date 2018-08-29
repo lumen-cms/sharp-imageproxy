@@ -1,7 +1,7 @@
 {
-  "name": "imageproxy-now",
+  "name": "sharp-imageproxy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sharp imageproxy to resize, scale and crop images on the fly.",
   "main": "./dist/handler.js",
   "scripts": {
     "build": "tsc",
@@ -10,8 +10,8 @@
     "test": "tsc && ava",
     "deploy": "npm run build && now -e NODE_ENV=production"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Dominic Garms <djgarms@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "etag": "^1.8.1",
     "micro": "^9.3.3",
