@@ -4,11 +4,12 @@
   "description": "Sharp imageproxy to resize, scale and crop images on the fly.",
   "main": "./dist/handler.js",
   "scripts": {
-    "build": "tsc",
+    "_build": "tsc",
     "start": "micro",
     "dev": "micro-dev",
     "test": "tsc && ava",
-    "deploy": "npm run build && now -e NODE_ENV=production"
+    "deploy": "npm run _build && now -e NODE_ENV=production",
+    "deploy-static":"npm run _build && now -e NODE_ENV=production -A `pwd`/_now_static.json --no-verify && now -A `pwd`/_now_static.json alias"
   },
   "author": "Dominic Garms <djgarms@gmail.com>",
   "license": "MIT",

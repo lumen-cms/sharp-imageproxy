@@ -1,0 +1,16 @@
+{
+  "name": "sharp-imageproxy-static",
+  "public": false,
+  "type": "npm",
+  "alias": [
+    "imgx-static.studentsgoabroad.com"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "Dockerfile",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json"
+  ]
+}

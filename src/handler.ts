@@ -10,6 +10,7 @@ module.exports = async function (req: IncomingMessage, response: ServerResponse)
     if (!req.url || req.url.match(/favicon.ico|logo.png|robots.txt|.css.map/g)) {
         return send(response, 400, 'File is not an image')
     }
+
     const [paramsErr, params] = parseParams(req.url)
 
     if (paramsErr) {
