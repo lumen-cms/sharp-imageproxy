@@ -42,8 +42,6 @@ module.exports = async (req, res) => {
     return send(400, 'File is not an image')
   }
 
-
-
   console.log('current path:', forwardParam)
   const [paramsErr, params] = parseParams(forwardParam)
   if (paramsErr) {
