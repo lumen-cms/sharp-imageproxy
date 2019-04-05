@@ -1,26 +1,19 @@
 import {IncomingMessage, ServerResponse} from 'http'
 
 const {send} = require('micro')
-const coreUrl = require('url')
 const etag = require('etag')
 const sharp = require('sharp')
 const request = require('request').defaults({encoding: null})
 const {getConfig, parseParams} = require('./parser')
 
 module.exports = async function (req: IncomingMessage, response: ServerResponse) {
-    let currentUrl = req.url
-    if (!currentUrl || currentUrl.match(/favicon.ico|logo.png|robots.txt|sw.js|.css.map/g)) {
-        return send(response, 400, 'File is not an image')
-    } else if (currentUrl === '/sw.js') {
+    if (!req.url || req.url.match(/favicon.ico|logo.png|robots.txt|.css.map/g)) {
         return send(response, 400, 'File is not an image')
     }
 
-    const parts = coreUrl.parse(currentUrl, true)
-    const urlQueryParam = parts.query && parts.query.url
-    let forwardParam = urlQueryParam || currentUrl
+    console.log('current path:', req.url)
 
-    console.log('current path:', forwardParam)
-    const [paramsErr, params] = parseParams(forwardParam)
+    const [paramsErr, params] = parseParams(req.url)
 
     if (paramsErr) {
         return send(response, 400, 'File is not an image')

@@ -1,0 +1,26 @@
+{
+  "name": "sharp-imageproxy-v2",
+  "version": 2,
+  "public": true,
+  "alias": [
+    "imgx-v2.studentsgoabroad.com"
+  ],
+  "builds": [
+    {
+      "src": "src/api/handler_v2.js",
+      "use": "@now/node@0.4.28",
+      "config": {
+        "maxLambdaSize": "25mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/src/api/handler_v2.js/$1",
+      "headers": {
+        "Cache-Control": "public, s-maxage=0, max-age=0"
+      }
+    }
+  ]
+}

@@ -6,10 +6,12 @@
   "scripts": {
     "_build": "tsc",
     "start": "micro",
-    "dev": "micro-dev",
+    "dev": "micro-dev -s",
+    "dev2": "node server-v2.js",
     "test": "tsc && ava",
     "deploy": "npm run _build && now -e NODE_ENV=production",
-    "deploy-static":"npm run _build && now -e NODE_ENV=production -A `pwd`/_now_static.json --no-verify && now -A `pwd`/_now_static.json alias"
+    "deploy-static": "npm run _build && now -e NODE_ENV=production -A `pwd`/_now_static.json --no-verify && now -A `pwd`/_now_static.json alias",
+    "deploy-v2": "now -e NODE_ENV=production -A `pwd`/_now_v2.json"
   },
   "author": "Dominic Garms <djgarms@gmail.com>",
   "license": "MIT",
@@ -17,13 +19,18 @@
     "etag": "^1.8.1",
     "micro": "^9.3.3",
     "request": "^2.88.0",
-    "sharp": "^0.20.7"
+    "sharp": "^0.20.8"
   },
   "devDependencies": {
     "@types/micro": "^7.3.1",
     "@types/node": "^10.9.2",
-    "ava": "^0.25.0",
+    "ava": "^1.4.1",
     "micro-dev": "^3.0.0",
     "typescript": "^3.0.1"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js"
+    ]
   }
 }
