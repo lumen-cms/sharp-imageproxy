@@ -42,6 +42,8 @@ module.exports = async (req, res) => {
     return send(400, 'File is not an image')
   }
 
+  // need to make sure leading slash is present
+  forwardParam = forwardParam.startsWith('/') ? forwardParam : '/' + forwardParam
   console.log('current path:', forwardParam)
   const [paramsErr, params] = parseParams(forwardParam)
   if (paramsErr) {
@@ -50,7 +52,7 @@ module.exports = async (req, res) => {
   const {projectId, fileSecret, crop, resize} = params
   const url = `https://files.graph.cool/${projectId}/${fileSecret}`
   // @ts-ignore
-  const supportWebp = req.headers.accept && req.headers.accept.includes('webp')
+  const supportWebp = forwardParam.endsWith('.webp') && req.headers.accept && req.headers.accept.includes('webp')
   const headerETag = req.headers['If-None-Match']
   const reqFile = await requestFile(url)
   const body = reqFile.body
@@ -141,12 +143,11 @@ module.exports = async (req, res) => {
       })
     res.setHeader('Content-Type', contentType)
     res.setHeader('Content-Disposition', contentDisposition)
-    res.setHeader('Cache-Control', 'max-age=31536000')
     res.setHeader('Date', date)
     res.setHeader('ETag', etag(output))
-    if (headerETag && headerETag === etag(output)) {
-      return send(304)
-    }
+    // if (headerETag && headerETag === etag(output)) {
+    //   return send(304)
+    // }
     return send(200, output)
   } catch (e) {
     return send(500, e)

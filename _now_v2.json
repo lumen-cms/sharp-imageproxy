@@ -3,7 +3,7 @@
   "version": 2,
   "public": true,
   "alias": [
-    "imgx-v2.studentsgoabroad.com"
+    "imgx-static.studentsgoabroad.com"
   ],
   "builds": [
     {
@@ -19,7 +19,8 @@
       "src": "/(.*)",
       "dest": "/src/api/handler_v2.js?url=$1",
       "headers": {
-        "Cache-Control": "public, s-maxage=0, max-age=0"
+        "Cache-Control": "public, s-maxage=31536000, max-age=31536000, immutable",
+        "Connection": "keep-alive"
       }
     }
   ]
