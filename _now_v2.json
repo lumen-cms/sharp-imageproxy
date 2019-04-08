@@ -5,6 +5,7 @@
   "alias": [
     "imgx-static.studentsgoabroad.com"
   ],
+  "scope": "lumenmedia",
   "builds": [
     {
       "src": "src/api/handler_v2.js",

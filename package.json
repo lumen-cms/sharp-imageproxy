@@ -9,9 +9,9 @@
     "dev": "micro-dev -s",
     "dev2": "node server-v2.js",
     "test": "tsc && ava",
-    "deploy": "npm run _build && now -e NODE_ENV=production",
+    "deploy-old": "npm run _build && now -e NODE_ENV=production",
     "deploy-static": "npm run _build && now -e NODE_ENV=production -A `pwd`/_now_static.json --no-verify && now -A `pwd`/_now_static.json alias",
-    "deploy-v2": "now -e NODE_ENV=production -A `pwd`/_now_v2.json"
+    "deploy": "now -e NODE_ENV=production -A `pwd`/_now_v2.json"
   },
   "author": "Dominic Garms <djgarms@gmail.com>",
   "license": "MIT",
